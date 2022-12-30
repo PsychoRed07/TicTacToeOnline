@@ -1,30 +1,32 @@
-import { io } from "socket.io-client";
-import { useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import "./css/chat.css";
 
+const Chat = ({socket}) => {
 
-const url = window.location.origin;
-let socket = io.connect(url);
-var index = 0;
+    const [state, setMessageList] = useState([{name : 'Player 1', value : 'Hello'}]);
+    const [message, setMessage] = useState("");
 
-const Chat = () => {
-
-    const [state, setMessageList] = useState([{id: 0, name : 'Player 1', value : 'Hello'}]);
-
-    const msg = useRef();
+    useEffect(() => {
+        socket.on("chat.response", (data) => {
+            console.log(data);
+            setMessageList([...state, data]);
+        });
+    }, [socket, state]);
+    
+    const onChange = (event) => {
+        setMessage(event.target.value);
+    };
 
     const handleSubmit = (event) => {
         event.preventDefault();
+
         console.log("You clicked submit!");
-        const input = msg.current.value;
-        console.log(input);
-        index = index + 1;
+        console.log(message); 
 
-        const newMessage = {id : index, name : 'Player 1', value : input};
-        console.log(newMessage);
-        setMessageList([...state, newMessage]);
+        const newMessage = {name : 'Player 1', value : message};
+        socket.emit("chat.sent", newMessage);
 
-        msg.current.value = "";
+        setMessage('');
 
     };
 
@@ -48,7 +50,7 @@ const Chat = () => {
 
     <form className="form-container" onSubmit={handleSubmit}>
       <label htmlFor="msg"><b>Message</b></label>
-      <textarea placeholder="Type message.." ref={msg} name="msg" required></textarea>
+      <textarea placeholder="Type message.." name="msg" onChange={onChange} value={message} required></textarea>
   
       <button type="submit" className="btn">Send</button>
     </form>

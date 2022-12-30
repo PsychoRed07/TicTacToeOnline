@@ -4,7 +4,7 @@ import "./css/board.css";
 // Importing the useState hook, useEffect hook and useRef hook
 import { useState, useEffect, useRef } from "react";
 
-const Board = ({ reset, setReset, winner, setWinner, elapsedTurn ,setElapsedTurn }) => {
+const Board = ({ reset, setReset, winner, setWinner, elapsedTurn ,setElapsedTurn, socket}) => {
 
 	// Creating a turn state, which indicates the current turn
 	const [turn, setTurn] = useState(0);

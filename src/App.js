@@ -8,9 +8,15 @@ import Chat from './Chat';
 import "./css/app.css";
 
 // Importing the useState hook
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import socketIo from "socket.io-client";
+
+const socket = socketIo.connect('http://localhost:3001');
 
 function App() {
+
+	const [isConnected, setIsConnected] = useState(socket.connected);
+
 
 	// Creating a reset state, which indicates whether
 	// the game should be reset or not
@@ -29,6 +35,21 @@ function App() {
 
     const [elapsedTurn, setElapsedTurn] = useState(0);
 
+	useEffect(() => {
+		socket.on('connect', () => {
+			setIsConnected(true);
+		});
+
+		socket.on('disconnect', () => {
+			setIsConnected(false);
+		});
+
+		return () => {
+			socket.off('connect');
+			socket.off('disconnect');
+		};
+	}, []);
+
 	return (
 		<div className="App">
 			{/* Shrinks the popup when there is no winner */}
@@ -43,11 +64,12 @@ function App() {
 			{/* Custom made board component comprising of
 			the tic-tac-toe board */}
             <div className='col1'>
-			<Board reset={reset} setReset={setReset} winner={winner} setWinner={setWinner} elapsedTurn={elapsedTurn} setElapsedTurn={setElapsedTurn}/>
+			<Board reset={reset} setReset={setReset} winner={winner} setWinner={setWinner} elapsedTurn={elapsedTurn} setElapsedTurn={setElapsedTurn} socket={socket}/>
             <Info elapsedTurn={elapsedTurn}/>
             </div>
             <div className='col2'>
-            <Chat />
+            <Chat socket={socket} />
+			<p>Connected: { '' + isConnected }</p>
             </div>
 		</div>
 	);
