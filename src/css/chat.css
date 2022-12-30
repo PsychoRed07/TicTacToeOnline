@@ -1,0 +1,91 @@
+{box-sizing: border-box;}
+
+.chat-popup{
+    display: block;
+    float: left;
+    height: 50%;
+}
+
+/* The popup chat - hidden by default */
+.form-popup {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  right: 15px;
+  border: 3px solid #f1f1f1;
+  z-index: 9;
+}
+
+/* Add styles to the form container */
+.form-container {
+  max-width: 300px;
+  padding: 10px;
+  background-color: #101010
+}
+
+.form-container h1{
+	color: white;
+}
+
+.form-container b{
+	color: white;
+}
+
+/* Full-width textarea */
+.form-container textarea {
+  width: 100%;
+  height: 20%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  border: none;
+  background: #f1f1f1;
+  resize: none;
+  min-height: 50px;
+}
+
+/* When the textarea gets focus, do something */
+.form-container textarea:focus {
+  background-color: #ddd;
+  outline: none;
+}
+
+/* Set a style for the submit/login button */
+.form-container .btn {
+  background-color: #04AA6D;
+  color: white;
+  padding: 16px 20px;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  margin-bottom:10px;
+  opacity: 0.8;
+}
+
+/* Add a red background color to the cancel button */
+.form-container .cancel {
+  background-color: red;
+}
+
+/* Add some hover effects to buttons */
+.form-container .btn:hover, .open-button:hover {
+  opacity: 1;
+}
+
+.chat-box {
+    height: 100%;
+    width: 100%;
+    max-width: 400px;
+    border: 1px;
+    border-style: dashed;
+    border-color: #04AA6D;
+    overflow-y: scroll;
+}
+
+.chat-text {
+    padding: 15px;
+    
+}
+
+.chat-text b{
+    color: lightsalmon;
+}

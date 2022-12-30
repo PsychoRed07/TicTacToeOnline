@@ -16,10 +16,4 @@ const Info = ({elapsedTurn}) => {
 	)
 }
 
-/*
-            <div className="info">
-                <div className="text">Turn : {elapsedTurn}</div>
-            </div>
-            */
-
 export default Info;

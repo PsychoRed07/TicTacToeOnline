@@ -1,6 +1,8 @@
 // Importing the required components
 import Board from './Board';
 import Info from "./Info";
+import Chat from './Chat';
+
 
 // Importing the CSS File
 import "./css/app.css";
@@ -40,10 +42,13 @@ function App() {
 			</div>
 			{/* Custom made board component comprising of
 			the tic-tac-toe board */}
-			<Board reset={reset} setReset={setReset} winner={winner} setWinner={setWinner} 
-            elapsedTurn={elapsedTurn} setElapsedTurn={setElapsedTurn}
-            />
-			<Info elapsedTurn={elapsedTurn}/>
+            <div className='col1'>
+			<Board reset={reset} setReset={setReset} winner={winner} setWinner={setWinner} elapsedTurn={elapsedTurn} setElapsedTurn={setElapsedTurn}/>
+            <Info elapsedTurn={elapsedTurn}/>
+            </div>
+            <div className='col2'>
+            <Chat />
+            </div>
 		</div>
 	);
 }
