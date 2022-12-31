@@ -1,13 +1,12 @@
 // Importing the css for the info
 import "./css/info.css";
 
-const Info = ({elapsedTurn}) => {
+const Info = ({elapsedTurn, player}) => {
 
 	return (
         <div>
             <div className="info">
-                <div className="text">Player 1: X</div>
-                <div className="text">Player 2: O</div>
+                <div className="text">You are playing {player}</div>
             </div>
             <div className="info">
                 <div className="text">Turn : {elapsedTurn}</div>

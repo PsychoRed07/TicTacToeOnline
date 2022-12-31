@@ -4,7 +4,7 @@ import "./css/board.css";
 // Importing the useState hook, useEffect hook and useRef hook
 import { useState, useEffect, useRef } from "react";
 
-const Board = ({ reset, setReset, winner, setWinner, elapsedTurn ,setElapsedTurn, socket}) => {
+const Board = ({ reset, setReset, winner, setWinner, elapsedTurn ,setElapsedTurn, socket, player}) => {
 
 	// Creating a turn state, which indicates the current turn
 	const [turn, setTurn] = useState(0);
@@ -17,15 +17,24 @@ const Board = ({ reset, setReset, winner, setWinner, elapsedTurn ,setElapsedTurn
 	// Creating a reference for the board
 	const boardRef = useRef(null);
 
+	const [isDisabled, setDisabled] = useState(true);
+
 	// Function to draw on the board
 	const draw = (event, index) => {
 		// Draws only if the position is not taken
 		// and winner is not decided yet
+
 		if (data[index - 1] === '' && winner === '') {
 
 			// Draws X if it's player 1's turn else draws O
 			const current = turn === 0 ? "X" : "O";
 
+			current === player ? setDisabled(false) : setDisabled(true);
+
+			if(isDisabled){
+				return;
+			}
+			
 			// Updating the data state
 			data[index - 1] = current;
 

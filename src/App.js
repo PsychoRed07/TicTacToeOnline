@@ -16,7 +16,7 @@ const socket = socketIo.connect('http://localhost:3001');
 function App() {
 
 	const [isConnected, setIsConnected] = useState(socket.connected);
-
+	const [player, setPlayer] = useState("X");
 
 	// Creating a reset state, which indicates whether
 	// the game should be reset or not
@@ -44,6 +44,13 @@ function App() {
 			setIsConnected(false);
 		});
 
+		// Set up the initial state when the game begins
+		socket.on("game.begin", function(data) {
+			// The server will asign X or O to the player
+			console.log("You are " + data.symbol);
+			setPlayer(data.symbol);
+		});
+
 		return () => {
 			socket.off('connect');
 			socket.off('disconnect');
@@ -64,8 +71,8 @@ function App() {
 			{/* Custom made board component comprising of
 			the tic-tac-toe board */}
             <div className='col1'>
-			<Board reset={reset} setReset={setReset} winner={winner} setWinner={setWinner} elapsedTurn={elapsedTurn} setElapsedTurn={setElapsedTurn} socket={socket}/>
-            <Info elapsedTurn={elapsedTurn}/>
+			<Board reset={reset} setReset={setReset} winner={winner} setWinner={setWinner} elapsedTurn={elapsedTurn} setElapsedTurn={setElapsedTurn} socket={socket} player={player}/>
+            <Info elapsedTurn={elapsedTurn} player={player}/>
             </div>
             <div className='col2'>
             <Chat socket={socket} />
